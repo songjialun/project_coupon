@@ -1,4 +1,4 @@
-package com.coupons.springboot.Tools;
+﻿package com.coupons.springboot.Tools;
 
 import io.jsonwebtoken.*;
 
@@ -49,13 +49,13 @@ public class TokenUtil {
             Date now=new Date(nowMillis);
             System.out.println("currenTime:"+now);
             long seconds=exp-nowMillis;//剩余的时间 ，若剩余的时间小与48小时，就返回一个新的token给APP
-            long days=seconds/(1000*60*60*24);
-            long hour=(seconds-days*1000*60*60*24)/3600000;
-            long minutes = (seconds-days*1000*60*60*24-hour*3600000) / 60000;
-            long remainingSeconds = seconds % 60;
-            System.out.println(seconds + " seconds is "+days+" days "+hour+" hours " + minutes + " minutes and "+ remainingSeconds + " seconds");
+//            long days=seconds/(1000*60*60*24);
+//            long hour=(seconds-days*1000*60*60*24)/3600000;
+//            long minutes = (seconds-days*1000*60*60*24-hour*3600000) / 60000;
+//            long remainingSeconds = seconds % 60;
+//            System.out.println(seconds + " seconds is "+days+" days "+hour+" hours " + minutes + " minutes and "+ remainingSeconds + " seconds");
             if (seconds<=TOKEN_EXPERIRED_TIME){
-                System.out.println("token的有效期小与24小时，请更新token！");
+                //System.out.println("token的有效期小与24小时，请更新token！");
                 return  "update";
             }
             return "success";
