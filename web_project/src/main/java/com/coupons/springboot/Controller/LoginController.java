@@ -38,7 +38,7 @@ public class LoginController {
         if(map.get("errMsg").toString().isEmpty()){
             // errMsg为空，说明登录成功
             System.out.println("登录成功");
-            String token = TokenUtil.createJWT(username);
+            String token = TokenUtil.createJWT(username,map.get("kind").toString());
             TokenUtil.parseJWT(token);
             headers.add("Authorization",token);
             status = HttpStatus.OK; // 200

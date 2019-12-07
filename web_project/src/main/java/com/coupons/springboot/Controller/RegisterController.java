@@ -19,7 +19,7 @@ public class RegisterController {
     @Autowired
     private RigisterService registerService;
 
-    @RequestMapping(value = "api/users",method = RequestMethod.POST)
+    @RequestMapping(value = "/api/users",method = RequestMethod.POST)
     public ResponseEntity<Map<String, Object>> Register(@RequestParam("username") String username, @RequestParam("password") String password,
                                                         @RequestParam("kind") String kind){
 

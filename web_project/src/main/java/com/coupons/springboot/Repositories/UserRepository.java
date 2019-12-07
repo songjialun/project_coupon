@@ -8,6 +8,8 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity,String> {
+    // TODO: 对表user_info进行操作，其中存储的是用户注册的记录
+
     public List<UserEntity> findByUsername(String username);
     public List<UserEntity> findByUsernameAndPassword(String username,String password);
 }
