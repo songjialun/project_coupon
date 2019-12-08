@@ -20,10 +20,11 @@ public class RigisterService {
     public Map<String,Object> register(@NonNull UserEntity user){
         Map<String,Object> map = new HashMap<String, Object>();
 
+        // 根据请求中的用户名，去用户注册表user_info中查找相关数据
         List<UserEntity> u = userRepository.findByUsername(user.getUsername());
         System.out.println("u.size = "+u.size());
         if(u==null || u.size()==0){
-            userRepository.save(user);
+            userRepository.save(user);  // 可用的用户名，将用户名和密码保存至user_info中，注册成功
             map.put("errMsg","");
         }
         else{

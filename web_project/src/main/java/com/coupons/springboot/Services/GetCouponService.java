@@ -19,7 +19,6 @@ import java.util.Map;
 public class GetCouponService {
     // TODO:抢优惠券服务类
 
-
     @Autowired
     private CouponCustomerRepository couponCustomerRepository;
 

@@ -21,6 +21,7 @@ public class LoginService {
     public Map<String,Object> login(@NonNull UserEntity user){
         Map<String,Object> map = new HashMap<String, Object>();
 
+        // 根据请求中的用户名，去用户注册表user_info中查找相关数据
         List<UserEntity> u = userRepository.findByUsername(user.getUsername());
         if(u==null || u.size()==0){
             map.put("kind",null);

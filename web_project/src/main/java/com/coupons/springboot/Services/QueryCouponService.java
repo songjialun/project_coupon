@@ -30,6 +30,10 @@ public class QueryCouponService {
     @Autowired
     private CouponCustomerRepository couponCustomerRepository;
 
+    // 每一页包含的记录数
+    private static int NUMBER_PER_PAGE = 20;
+
+
     public Map<String,Object> QueryCoupon(String userName,String token,int page) {
         Map<String,Object> map = new HashMap<String, Object>();
         map.put("errMsg", "") ;
@@ -55,7 +59,14 @@ public class QueryCouponService {
                         map.put("errMsg","查询结果为空");
                         map.put("status",HttpStatus.NO_CONTENT); // 返回http码 204
                     }
-                    for (int i = 0; i < couponList.size(); i++) {
+
+                    // 原本想用SQL语句实现分页查询的，但是试了一下好像不行。由于时间比较紧，这里直接用代码控制页码。
+                    int start = (page-1)*NUMBER_PER_PAGE;
+                    int end = page*NUMBER_PER_PAGE;
+                    for (int i = start; i < end; i++) {
+                        if(i>=couponList.size()){
+                            break;
+                        }
                         // 整理格式
                         Map<String,Object> item = new HashMap<>();
                         item.put("name",couponList.get(i).getCouponName());
@@ -73,7 +84,13 @@ public class QueryCouponService {
                         map.put("errMsg","查询结果为空");
                         map.put("status",HttpStatus.NO_CONTENT); // 返回http码 204
                     }
-                    for (int i = 0; i < couponCustomerList.size(); i++) {
+                    int start = (page-1)*NUMBER_PER_PAGE;
+                    int end = page*NUMBER_PER_PAGE;
+
+                    for (int i = start; i < end; i++) {
+                        if(i>=couponCustomerList.size()){
+                            break;
+                        }
                         // 整理格式
                         Map<String,Object> item = new HashMap<>();
                         item.put("name",couponCustomerList.get(i).getCouponName());
@@ -103,9 +120,14 @@ public class QueryCouponService {
                     // 若不一致且url指定的用户名身份为商家，则获取该商家的优惠券余量
                     // 查询商家，所以从coupon_saler_info表中查询数据
                     List<CouponSalerEntity> couponList = couponSalerRepository.findAllBySalerName(userName);
-
                     List<Map<String,Object>> data = new ArrayList<>();
-                    for (int i = 0; i < couponList.size(); i++) {
+
+                    int start = (page-1)*NUMBER_PER_PAGE;
+                    int end = page*NUMBER_PER_PAGE;
+                    for (int i = start; i < end; i++) {
+                        if(i>=couponList.size()){
+                            break;
+                        }
                         // 整理格式
                         Map<String,Object> item = new HashMap<>();
                         item.put("name",couponList.get(i).getCouponName());
