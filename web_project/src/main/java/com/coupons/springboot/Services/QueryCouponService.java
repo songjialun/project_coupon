@@ -54,15 +54,20 @@ public class QueryCouponService {
                 List<Map<String,Object>> data = new ArrayList<>();
                 if(u.get(0).getKind().equals("saler")){
                     // 查询商家剩余的优惠券信息，所以从coupon_saler_info表中查询数据
+                    // System.out.println("查询商家剩余的优惠券信息，所以从coupon_saler_info表中查询数据");
                     List<CouponSalerEntity> couponList = couponSalerRepository.findAllBySalerName(userName);
-                    if(couponList.size()==0){
-                        map.put("errMsg","查询结果为空");
-                        map.put("status",HttpStatus.NO_CONTENT); // 返回http码 204
-                    }
 
                     // 原本想用SQL语句实现分页查询的，但是试了一下好像不行。由于时间比较紧，这里直接用代码控制页码。
                     int start = (page-1)*NUMBER_PER_PAGE;
                     int end = page*NUMBER_PER_PAGE;
+                    // System.out.println("flag 1，start = "+start+" , " +couponList.size());
+
+                    if(couponList.size()==0 || start >= couponList.size()){
+                        // System.out.println("查询商家剩余的优惠券信息，结果为空---2222");
+                        map.put("errMsg","查询结果为空");
+                        map.put("status",HttpStatus.NO_CONTENT); // 返回http码 204
+                    }
+
                     for (int i = start; i < end; i++) {
                         if(i>=couponList.size()){
                             break;
@@ -79,13 +84,14 @@ public class QueryCouponService {
                 }else {
                     // 查询顾客自己已经抢到的优惠券信息，所以从coupon_customer_info表中查询数据
                     List<CouponCustomerEntity> couponCustomerList = couponCustomerRepository.findAllByCustomerName(userName);
-
-                    if(couponCustomerList.size()==0){
+                    int start = (page-1)*NUMBER_PER_PAGE;
+                    int end = page*NUMBER_PER_PAGE;
+                    // System.out.println("flag 2，start = "+start+" , " +couponCustomerList.size());
+                    if(couponCustomerList.size()==0 || start >= couponCustomerList.size()){
+                        // System.out.println("查询商家剩余的优惠券信息，结果为空---3333");
                         map.put("errMsg","查询结果为空");
                         map.put("status",HttpStatus.NO_CONTENT); // 返回http码 204
                     }
-                    int start = (page-1)*NUMBER_PER_PAGE;
-                    int end = page*NUMBER_PER_PAGE;
 
                     for (int i = start; i < end; i++) {
                         if(i>=couponCustomerList.size()){
@@ -115,15 +121,20 @@ public class QueryCouponService {
                 return map;
             }
             else{
-
                 if(u.get(0).getKind().equals("saler")){
                     // 若不一致且url指定的用户名身份为商家，则获取该商家的优惠券余量
                     // 查询商家，所以从coupon_saler_info表中查询数据
                     List<CouponSalerEntity> couponList = couponSalerRepository.findAllBySalerName(userName);
                     List<Map<String,Object>> data = new ArrayList<>();
-
                     int start = (page-1)*NUMBER_PER_PAGE;
                     int end = page*NUMBER_PER_PAGE;
+                    //System.out.println("flag 3，start = "+start+" , " +couponList.size());
+                    if(couponList.size()==0 || start >= couponList.size()){
+                        //System.out.println("查询商家剩余的优惠券信息，结果为空------1111");
+                        map.put("errMsg","查询结果为空");
+                        map.put("status",HttpStatus.NO_CONTENT); // 返回http码 204
+                    }
+
                     for (int i = start; i < end; i++) {
                         if(i>=couponList.size()){
                             break;

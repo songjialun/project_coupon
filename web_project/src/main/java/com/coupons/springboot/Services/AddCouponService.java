@@ -47,6 +47,7 @@ public class AddCouponService {
                     couponSalerRepository.addCouponAmount(addAmount,recordId);
                     System.out.println("则修改原记录中发放优惠券的totalAmount和leftAmount，加上这次请求发放的优惠券数量 : "+addAmount);
                 }
+                map.put("status", HttpStatus.CREATED) ;
             }else{
                 System.out.println("token 和 用户名 不匹配");
                 map.put("status", HttpStatus.UNAUTHORIZED) ;
